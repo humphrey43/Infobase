@@ -1,0 +1,2 @@
+# Infobase
+Central documentation
