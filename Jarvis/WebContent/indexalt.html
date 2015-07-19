@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>HTML5 Canvas Template</title>
+        <style>
+            #canvas1, #canvas2, #canvas3
+            {
+                top: 0px;
+                left: 0px;
+                position: absolute;
+            }
+            #canvas1 
+            {
+                z-index: -2;
+            }
+            #canvas1.off 
+            {
+                background: white;
+            }
+            #canvas1.on 
+            {
+                background: yellow;
+            }
+            #canvas2 
+            {
+                z-index: -1;
+            }
+            #canvas3 
+            {
+                z-index: 3;
+             }
+            #object 
+            {
+                z-index: 4;
+                position: absolute;
+            }
+            #icon2 
+            {
+                top: 200px;
+                left: 50px;
+                z-index: 4;
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <div id="display">
+        <canvas id="canvas1" class="on" width="1000" height="500">
+            <p>Canvas not supported.</p>
+        </canvas>
+        <canvas id="canvas2" width="1000" height="500">
+            <p>Canvas not supported.</p>
+        </canvas>
+            <input type="button" onclick="rechts();">rechts</input>  
+            <input type="button" onclick="leiser();">leiser</input>  
+            <input type="button" onclick="lauter();">lauter</input>  
+         </div>
+            <div id="playerFrame"></div>
+        <!--video id="player" hidden>
+       <source src="http://dradio_mp3_dlf_s.akacast.akamaistream.net/7/251/142684/v1/gnl.akacast.akamaistream.net/dradio_mp3_dlf_s" />
+            </video -->
+        <div id="icon1" class="object" style="left: 50px;top: 200px;position: absolute;"><img src="M5.png" alt="jQuery1"/></div>  
+        <div id="icon2" class="object" style="left: 70px;top: 200px;position: absolute;"><img src="M5.png" alt="jQuery2"/></div>  
+        <div id="risk1" class="object" style="left: 50px;top: 250px;width: 300px;height: 20px; background-color: #ffd800;color: #f00;position: absolute;">Risk1</div>  
+        </form>  
+        <script src="jquery.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var playing = false;
+            var $player;
+            var player;
+            var $playerFrame;
+            var playerFrame;
+            var srcold = "http://dradio_mp3_dlf_s.akacast.akamaistream.net/7/251/142684/v1/gnl.akacast.akamaistream.net/dradio_mp3_dlf_s";
+            $(document).ready(function () {
+                var canvas = $("#canvas2").get(0);
+                var context = canvas.getContext("2d");
+                $playerFrame = $("#playerFrame");
+                playerFrame = $playerFrame[0];
+                function renderContent() {
+                    context.fillStyle = "#F0F0F0";
+                    context.fillRect(50, 50, canvas.width - 100, canvas.height - 100);
+                    var text = "Hello, Canvas!";
+                    context.fillStyle = "#FF0000";
+                    context.strokeStyle = "#0000FF";
+                    context.font = "36px sans-serif";
+                    context.strokeText(text, 10, 50);
+                    context.fillText(text, 10, 50);
+                    // we'll do our drawing here...
+                }
+
+                renderContent();
+            });
+            function setPlay(onoff) {
+                playing = onoff;
+                if (playing) {
+                    playPlaylist(srcold);
+                    var src = $player.find("source")[0];
+                    //src.src = srcold;
+                    player.play();
+                } else {
+                    $playerFrame.html("");
+                    $player = null;
+                    player = null;
+                    var iframe = $("#playerIFrame")[0];
+                    var t = iframe.test1;
+                    alert(t);
+                    iframe.close();
+                    iframe = 0
+                    //                    player.pause();
+                    //                    var src = $player.find("source")[0];
+                    //                    src.src = null;
+                    //                    player.pause();
+                    //                    player.currentTime = 0;
+                };
+                //                alert(player.paused);
+            }
+            function setVolume(inc) {
+                if (player) {
+                    var volume = player.volume;
+                    if ((inc < 0 && volume > 0) || (inc > 0 && volume < 1)) {
+                        volume += inc;
+                    }
+                    player.volume = volume;
+                }
+            }
+            function started() {
+                //                 alert("started");
+            }
+            function paused() {
+                //                 alert("paused");
+            }
+            function lauter() {
+                setVolume(+0.1);
+            }
+            function leiser() {
+                setVolume(-0.1);
+            }
+            function rechts() {
+                setPlay(!playing);
+            }
+            function playPlaylist(url) {
+                $playerFrame.html("<iFrame id='playerIFrame'><html><head></head><body><div id='test1'>hallo</div><video id='player' hidden><source src='" + url + "'' /></video></body></html></iFrame>");
+                $player = $("#player");
+                player = $player[0];
+            }
+        </script>
+    </body>
+</html>
