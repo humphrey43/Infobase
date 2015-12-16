@@ -1,3 +1,4 @@
+var portfolio = new Portfolio("RDB");
 var project;
 
 function Project(name) {
@@ -10,8 +11,56 @@ function Project(name) {
 }
 
 Project.prototype.newMilestone = function(name, date) {
-	var m = new Milestone(name,date);
+	var m = new Milestone(name,assertDate(date));
 	this.milestones[this.milestones.length] = m;
+}
+
+Project.prototype.setStartDate = function(date) {
+	this.start = assertDate(date);
+}
+
+Project.prototype.setEndDate = function(date) {
+	this.start = assertDate(date);
+}
+
+function assertDate(date) {
+	var erg = null;
+	var d = date;
+	if (d instanceof Date) {
+		erg = d;
+	} else {
+		var parts = date.split(".");
+		if (parts.length == 3) {
+			var d = parseNumber(parts[0], 1, 31);
+			var m = parseNumber(parts[1], 1, 12);
+			var j = parseNumber(parts[2], 1900, 2099);
+			if (d > 0 && m > 0 && j > 0) {
+				erg = new Date(j, m-1, d);
+			}
+		}
+	}
+	return erg;
+}
+
+function parseNumber(text, min, max) {
+	var number = -1;
+	var n = Number(text);
+	if (!isNaN(text)) {
+		if (n >= min && n <= max) {
+			number = n;
+		}
+	}
+	return number;
+}
+
+function Portfolio(name) {
+	this.name = name;
+	this.projects = new Array();
+}
+
+Portfolio.prototype.addProject = function(project) {
+	this.projects[this.projects.length] = project;
+	return project;
 }
 
 function Milestone(name, date) {
