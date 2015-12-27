@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+        <script src="jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+function Uhr() {
+//	this.anzeige = (new Date()).toLocaleString().substring(11,16);
+}
+Uhr.prototype.getZeit = function() {
+	return (new Date()).toLocaleString().substring(11,16);
+};
+var uhr1 = new Uhr();
+function showTime(zeitid) {
+	var $zeitt = $(zeitid);
+	var z = uhr1.getZeit();
+	$zeitt.html(z);
+}
+document.addEventListener('DOMContentLoaded', function ( ) {
+	  showTime("zeit");
+	});
+</script> 
+</head>
+<body>
+<form>
+<div id="zeit">
+00:00
+</div>
+</form>
+       <script type="text/javascript">
+           $(document).ready(function () {
+           	showTime("zeit");
+           });
+   	</script>
+</body>
+</html>
